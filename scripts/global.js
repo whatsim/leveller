@@ -8,6 +8,28 @@ platformSprite.src = 'platform_16x16.png'
 platformSprite.addEventListener('mouseup',function(e){
 	tileToPaint = Math.floor(e.clientY / 16)
 })
+platformSprite.addEventListener('drop',function(e){
+	
+  
+	var reader = new FileReader,
+		file = e.dataTransfer.files[0],
+		medium = file.type.split('/')[0];
+			
+	reader.onload = function(event) {
+		platformSprite.src = event.target.result;
+	};
+
+	if (medium === 'image') {
+		reader.readAsDataURL(file);
+	}
+
+	e.preventDefault();
+	e.stopPropagation();
+	return false
+})
+platformSprite.addEventListener('dragover',function(e){
+	e.preventDefault();
+})
 platformSprite.id = "palette"
 document.body.appendChild(platformSprite)
 
@@ -120,4 +142,11 @@ function printLevel(){
 	array.push(worldSettings.height)
 	array = array.concat(worldArray)
 	console.log(JSON.stringify(array))
+}
+
+function ingestLevel(str){
+	var array = JSON.parse(str)
+	worldSettings.width = array[0]
+	worldSettings.height = array[1]
+	worldArray = array.slice(2)
 }
