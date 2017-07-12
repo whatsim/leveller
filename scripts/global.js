@@ -17,8 +17,8 @@ var rightMask = 0b11110000
 var leftMask = 0b00001111
 
 var worldSettings = {
-	width : 128,
-	height : 32
+	width : 32,
+	height : 16
 }
 var worldArray = []
 
